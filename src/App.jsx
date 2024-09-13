@@ -21,11 +21,21 @@ const initialState = {
 const reducer = (state, action) => {
   switch (action.type) {
     case "dataReceived":
-      return { ...state, questions: action.payload, status: "ready" };
+      return {
+        ...state,
+        questions: action.payload,
+        status: "ready",
+      };
     case "dataFailed":
-      return { ...state, status: "error" };
+      return {
+        ...state,
+        status: "error",
+      };
     case "start":
-      return { ...state, status: "active" };
+      return {
+        ...state,
+        status: "active",
+      };
     case "newAnswer": {
       const question = state.questions.at(state.index);
 
@@ -39,13 +49,23 @@ const reducer = (state, action) => {
       };
     }
     case "nextQuestion":
-      return { ...state, index: state.index + 1, answer: null };
+      return {
+        ...state,
+        index: state.index + 1,
+        answer: null,
+      };
     case "finish":
       return {
         ...state,
         status: "finished",
         highscore:
           state.points > state.highscore ? state.points : state.highscore,
+      };
+    case "restart":
+      return {
+        ...initialState,
+        questions: state.questions,
+        status: "ready",
       };
     default:
       throw new Error("Unknown action");
@@ -112,6 +132,7 @@ const App = () => {
             points={points}
             maxPossiblePoints={maxPossiblePoints}
             highscore={highscore}
+            dispatch={dispatch}
           />
         )}
       </Main>
