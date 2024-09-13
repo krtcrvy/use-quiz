@@ -98,7 +98,7 @@ const App = () => {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/questions`);
+        const response = await fetch(import.meta.env.VITE_API_URL);
         const data = await response.json();
         dispatch({ type: "dataReceived", payload: data });
       } catch (error) {
